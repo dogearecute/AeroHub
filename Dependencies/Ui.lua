@@ -1391,4 +1391,4 @@ function VLib:Window(textgame)
 	return Tabs
 end
 
-return Library
+return VLib
