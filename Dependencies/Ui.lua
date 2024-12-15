@@ -1,3 +1,5 @@
+pcall(function()
+
 -- Modified Ui (GayPrideFlag UI) --
 
 local VLib = {HueSelectionPosition = 0}
@@ -1382,3 +1384,5 @@ function VLib:Window(textgame)
 end
 
 return VLib
+
+	end)
