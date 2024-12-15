@@ -363,8 +363,8 @@ function VLib:Window(textgame)
 				end
 			)
 		end
-		function ContainerItems:Toggle(text, callback)
-			local Toggled = false
+		function ContainerItems:Toggle(text, callback, presetState)
+			local Toggled = presetState or false
 			local Toggle = Instance.new("TextButton")
 			local ToggleCorner = Instance.new("UICorner")
 			local Title = Instance.new("TextLabel")
@@ -374,7 +374,7 @@ function VLib:Window(textgame)
 			local ToggleFrameRainbowCorner = Instance.new("UICorner")
 			local ToggleDot = Instance.new("Frame")
 			local ToggleDotCorner = Instance.new("UICorner")
-
+		
 			Toggle.Name = "Toggle"
 			Toggle.Parent = Container
 			Toggle.BackgroundColor3 = Color3.fromRGB(32, 33, 37)
@@ -385,11 +385,11 @@ function VLib:Window(textgame)
 			Toggle.Text = ""
 			Toggle.TextColor3 = Color3.fromRGB(255, 255, 255)
 			Toggle.TextSize = 14.000
-
+		
 			ToggleCorner.CornerRadius = UDim.new(0, 6)
 			ToggleCorner.Name = "ToggleCorner"
 			ToggleCorner.Parent = Toggle
-
+		
 			Title.Name = "Title"
 			Title.Parent = Toggle
 			Title.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
@@ -401,38 +401,46 @@ function VLib:Window(textgame)
 			Title.TextColor3 = Color3.fromRGB(255, 255, 255)
 			Title.TextSize = 14.000
 			Title.TextXAlignment = Enum.TextXAlignment.Left
-
+		
 			ToggleFrame.Name = "ToggleFrame"
 			ToggleFrame.Parent = Toggle
 			ToggleFrame.BackgroundColor3 = Color3.fromRGB(22, 23, 27)
 			ToggleFrame.Position = UDim2.new(0.893300176, 0, 0.142857149, 0)
 			ToggleFrame.Size = UDim2.new(0, 36, 0, 19)
-
+		
 			ToggleFrameCorner.CornerRadius = UDim.new(1, 0)
 			ToggleFrameCorner.Name = "ToggleFrameCorner"
 			ToggleFrameCorner.Parent = ToggleFrame
-
+		
 			ToggleFrameRainbow.Name = "ToggleFrameRainbow"
 			ToggleFrameRainbow.Parent = ToggleFrame
 			ToggleFrameRainbow.BackgroundColor3 = Color3.fromHex("#766AFF")
 			ToggleFrameRainbow.BackgroundTransparency = 1.000
 			ToggleFrameRainbow.Position = UDim2.new(-0.0198377371, 0, 0.00601506233, 0)
 			ToggleFrameRainbow.Size = UDim2.new(0, 36, 0, 19)
-
+		
 			ToggleFrameRainbowCorner.CornerRadius = UDim.new(1, 0)
 			ToggleFrameRainbowCorner.Name = "ToggleFrameRainbowCorner"
 			ToggleFrameRainbowCorner.Parent = ToggleFrameRainbow
-
+		
 			ToggleDot.Name = "ToggleDot"
 			ToggleDot.Parent = ToggleFrameRainbow
 			ToggleDot.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 			ToggleDot.Position = UDim2.new(0.104999997, -3, 0.289000005, -4)
 			ToggleDot.Size = UDim2.new(0, 16, 0, 16)
-
+		
 			ToggleDotCorner.CornerRadius = UDim.new(1, 0)
 			ToggleDotCorner.Name = "ToggleDotCorner"
 			ToggleDotCorner.Parent = ToggleDot
-
+		
+			if Toggled then
+				ToggleFrameRainbow.BackgroundTransparency = 0
+				ToggleDot.Position = UDim2.new(0.595, -3, 0.289000005, -4)
+			else
+				ToggleFrameRainbow.BackgroundTransparency = 1
+				ToggleDot.Position = UDim2.new(0.104999997, -3, 0.289000005, -4)
+			end
+		
 			Toggle.MouseEnter:Connect(
 				function()
 					TweenService:Create(
@@ -451,7 +459,7 @@ function VLib:Window(textgame)
 					):Play()
 				end
 			)
-
+		
 			Toggle.MouseButton1Click:Connect(
 				function()
 					if Toggled == false then
@@ -481,9 +489,9 @@ function VLib:Window(textgame)
 					pcall(callback, Toggled)
 				end
 			)
-
+		
 			Container.CanvasSize = UDim2.new(0, 0, 0, ContainerLayout.AbsoluteContentSize.Y)
-		end
+		end		
 		function ContainerItems:Slider(text, min, max, start, callback)
 			local dragging = false
 			local Slider = Instance.new("TextButton")
@@ -593,16 +601,16 @@ function VLib:Window(textgame)
 				end
 			end)()
 		end
-		function ContainerItems:Dropdown(text, list, callback)
+		function ContainerItems:Dropdown(text, list, callback, presetValue)
 			local DropToggled = false
 			local FrameSize = 0
 			local ItemCount = 0
-
+		
 			local Dropdown = Instance.new("TextButton")
 			local Title = Instance.new("TextLabel")
 			local DropdownCorner = Instance.new("UICorner")
 			local Arrow = Instance.new("ImageLabel")
-
+		
 			Dropdown.Name = "Dropdown"
 			Dropdown.Parent = Container
 			Dropdown.BackgroundColor3 = Color3.fromRGB(32, 33, 37)
@@ -613,7 +621,7 @@ function VLib:Window(textgame)
 			Dropdown.Text = ""
 			Dropdown.TextColor3 = Color3.fromRGB(255, 255, 255)
 			Dropdown.TextSize = 14.000
-
+		
 			Title.Name = "Title"
 			Title.Parent = Dropdown
 			Title.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
@@ -625,11 +633,11 @@ function VLib:Window(textgame)
 			Title.TextColor3 = Color3.fromRGB(255, 255, 255)
 			Title.TextSize = 14.000
 			Title.TextXAlignment = Enum.TextXAlignment.Left
-
+		
 			DropdownCorner.CornerRadius = UDim.new(0, 6)
 			DropdownCorner.Name = "DropdownCorner"
 			DropdownCorner.Parent = Dropdown
-
+		
 			Arrow.Name = "Arrow"
 			Arrow.Parent = Dropdown
 			Arrow.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
@@ -637,13 +645,13 @@ function VLib:Window(textgame)
 			Arrow.Position = UDim2.new(0.923076808, 0, 0.0357142836, 0)
 			Arrow.Size = UDim2.new(0, 25, 0, 25)
 			Arrow.Image = "http://www.roblox.com/asset/?id=6034818372"
-
+		
 			local DropdownFrame = Instance.new("Frame")
 			local DropdownFrameCorner = Instance.new("UICorner")
 			local DropdownHolder = Instance.new("ScrollingFrame")
 			local DropdownItemLayout = Instance.new("UIListLayout")
 			local DropdownItemHolder = Instance.new("UIPadding")
-
+		
 			DropdownFrame.Name = "DropdownFrame"
 			DropdownFrame.Parent = Container
 			DropdownFrame.BackgroundColor3 = Color3.fromRGB(32, 33, 37)
@@ -651,10 +659,10 @@ function VLib:Window(textgame)
 			DropdownFrame.Position = UDim2.new(0.334374994, 0, 0.604166687, 0)
 			DropdownFrame.Size = UDim2.new(0, 403, 0, 0)
 			DropdownFrame.Visible = false
-
+		
 			DropdownFrameCorner.Name = "DropdownFrameCorner"
 			DropdownFrameCorner.Parent = DropdownFrame
-
+		
 			DropdownHolder.Name = "DropdownHolder"
 			DropdownHolder.Parent = DropdownFrame
 			DropdownHolder.Active = true
@@ -666,19 +674,23 @@ function VLib:Window(textgame)
 			DropdownHolder.ScrollBarThickness = 3
 			DropdownHolder.CanvasSize = UDim2.new(0, 0, 0, 0)
 			DropdownHolder.ScrollBarImageColor3 = Color3.fromRGB(48, 50, 56)
-
+		
 			DropdownItemLayout.Name = "DropdownItemLayout"
 			DropdownItemLayout.Parent = DropdownHolder
 			DropdownItemLayout.SortOrder = Enum.SortOrder.LayoutOrder
 			DropdownItemLayout.Padding = UDim.new(0, 5)
-
+		
 			DropdownItemHolder.Name = "DropdownItemHolder"
 			DropdownItemHolder.Parent = DropdownHolder
 			DropdownItemHolder.PaddingBottom = UDim.new(0, 8)
 			DropdownItemHolder.PaddingTop = UDim.new(0, 8)
-
+		
 			Container.CanvasSize = UDim2.new(0, 0, 0, ContainerLayout.AbsoluteContentSize.Y)
-
+		
+			if presetValue then
+				Title.Text = presetValue
+			end
+		
 			Dropdown.MouseEnter:Connect(function()
 				TweenService:Create(
 					Dropdown,
@@ -686,7 +698,7 @@ function VLib:Window(textgame)
 					{BackgroundColor3 = Color3.fromRGB(37, 39, 44)}
 				):Play()
 			end)
-
+		
 			Dropdown.MouseLeave:Connect(function()
 				TweenService:Create(
 					Dropdown,
@@ -694,7 +706,7 @@ function VLib:Window(textgame)
 					{BackgroundColor3 = Color3.fromRGB(32, 33, 37)}
 				):Play()
 			end)
-
+		
 			Dropdown.MouseButton1Click:Connect(function()
 				if DropToggled == false then
 					DropdownFrame.Visible = true
@@ -749,10 +761,10 @@ function VLib:Window(textgame)
 				end
 				DropToggled = not DropToggled
 			end)
-
+		
 			for i, v in next, list do
 				ItemCount = ItemCount + 1
-
+		
 				if ItemCount == 1 then
 					FrameSize = 39
 				elseif ItemCount == 2 then
@@ -760,14 +772,14 @@ function VLib:Window(textgame)
 				elseif ItemCount >= 3 then
 					FrameSize = 100
 				end
-
+		
 				if type(v) ~= "string" then
 					v = tostring(v)
 				end
-
+		
 				local Item = Instance.new("TextButton")
 				local ItemCorner = Instance.new("UICorner")
-
+		
 				Item.Name = "Item"
 				Item.Parent = DropdownHolder
 				Item.BackgroundColor3 = Color3.fromRGB(32, 33, 37)
@@ -778,11 +790,11 @@ function VLib:Window(textgame)
 				Item.TextColor3 = Color3.fromRGB(255, 255, 255)
 				Item.TextSize = 14.000
 				Item.Text = v
-
+		
 				ItemCorner.CornerRadius = UDim.new(0, 6)
 				ItemCorner.Name = "ItemCorner"
 				ItemCorner.Parent = Item
-
+		
 				Item.MouseButton1Click:Connect(function()
 					callback(v) 
 					Title.Text = v
