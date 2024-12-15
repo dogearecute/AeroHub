@@ -492,115 +492,6 @@ function VLib:Window(textgame)
 		
 			Container.CanvasSize = UDim2.new(0, 0, 0, ContainerLayout.AbsoluteContentSize.Y)
 		end		
-		function ContainerItems:Slider(text, min, max, start, callback)
-			local dragging = false
-			local Slider = Instance.new("TextButton")
-			local Title = Instance.new("TextLabel")
-			local SliderFrame = Instance.new("Frame")
-			local SliderFrameCorner = Instance.new("UICorner")
-			local SliderIndicator = Instance.new("Frame")
-			local SliderIndicatorCorner = Instance.new("UICorner")
-			local SliderCorner = Instance.new("UICorner")
-			local Value = Instance.new("TextLabel")
-
-			Slider.Name = "Slider"
-			Slider.Parent = Container
-			Slider.BackgroundColor3 = Color3.fromRGB(32, 33, 37)
-			Slider.Position = UDim2.new(-0.747557044, 0, 0.729113936, 0)
-			Slider.Size = UDim2.new(0, 403, 0, 49)
-			Slider.AutoButtonColor = false
-			Slider.Font = Enum.Font.Gotham
-			Slider.Text = ""
-			Slider.TextColor3 = Color3.fromRGB(255, 255, 255)
-			Slider.TextSize = 14.000
-
-			Title.Name = "Title"
-			Title.Parent = Slider
-			Title.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-			Title.BackgroundTransparency = 1.000
-			Title.Position = UDim2.new(0.0198511165, 0, 0, 0)
-			Title.Size = UDim2.new(0, 192, 0, 28)
-			Title.Font = Enum.Font.Gotham
-			Title.Text = text
-			Title.TextColor3 = Color3.fromRGB(255, 255, 255)
-			Title.TextSize = 14.000
-			Title.TextXAlignment = Enum.TextXAlignment.Left
-
-			SliderFrame.Name = "SliderFrame"
-			SliderFrame.Parent = Slider
-			SliderFrame.BackgroundColor3 = Color3.fromRGB(22, 23, 27)
-			SliderFrame.Position = UDim2.new(0.0223324299, 0, 0.563266039, 0)
-			SliderFrame.Size = UDim2.new(0, 384, 0, 11)
-
-			SliderFrameCorner.Name = "SliderFrameCorner"
-			SliderFrameCorner.Parent = SliderFrame
-
-			SliderIndicator.Name = "SliderIndicator"
-			SliderIndicator.Parent = SliderFrame
-			SliderIndicator.BackgroundColor3 = Color3.fromHex("#766AFF")
-			SliderIndicator.BorderSizePixel = 0
-			SliderIndicator.Position = UDim2.new((start or min) / max, 0, 0.0363603085, 0)
-			SliderIndicator.Size = UDim2.new((start or min) / max, 0, 0, 11)
-
-			SliderIndicatorCorner.Name = "SliderIndicatorCorner"
-			SliderIndicatorCorner.Parent = SliderIndicator
-
-			SliderCorner.CornerRadius = UDim.new(0, 6)
-			SliderCorner.Name = "SliderCorner"
-			SliderCorner.Parent = Slider
-
-			Value.Name = "Value"
-			Value.Parent = Slider
-			Value.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-			Value.BackgroundTransparency = 1.000
-			Value.Position = UDim2.new(0.496277869, 0, 0, 0)
-			Value.Size = UDim2.new(0, 192, 0, 28)
-			Value.Font = Enum.Font.Gotham
-			Value.Text = tostring(start and math.floor((start / max) * (max - min) + min) or min)
-			Value.TextColor3 = Color3.fromRGB(255, 255, 255)
-			Value.TextSize = 14.000
-			Value.TextXAlignment = Enum.TextXAlignment.Right
-
-			local function slide(input)
-				local pos = UDim2.new(
-					math.clamp((input.Position.X - SliderFrame.AbsolutePosition.X) / SliderFrame.AbsoluteSize.X, 0, 1),
-					0,
-					0,
-					11
-				)
-				SliderIndicator:TweenSize(pos, Enum.EasingDirection.Out, Enum.EasingStyle.Quart, 0.3, true)
-				local val = math.floor(((pos.X.Scale * max) / max) * (max - min) + min)
-				Value.Text = tostring(val)
-				pcall(callback, val)
-			end
-
-			SliderFrame.InputBegan:Connect(function(input)
-				if input.UserInputType == Enum.UserInputType.MouseButton1 then
-					slide(input)
-					dragging = true
-				end
-			end)
-
-			SliderFrame.InputEnded:Connect(function(input)
-				if input.UserInputType == Enum.UserInputType.MouseButton1 then
-					dragging = false
-				end
-			end)
-
-			UserInputService.InputChanged:Connect(function(input)
-				if dragging and input.UserInputType == Enum.UserInputType.MouseMovement then
-					slide(input)
-				end
-			end)
-
-			Container.CanvasSize = UDim2.new(0, 0, 0, ContainerLayout.AbsoluteContentSize.Y)
-
-			coroutine.wrap(function()
-				while wait() do
-					SliderIndicator.BackgroundColor3 = Color3.fromHSV(zigzag(counter), .8, 1)
-				end
-			end)()
-		end
 		function ContainerItems:Dropdown(text, list, callback, presetValue)
 			local DropToggled = false
 			local FrameSize = 0
@@ -1302,7 +1193,7 @@ function VLib:Window(textgame)
 			local TextboxFrameCorner = Instance.new("UICorner")
 			local TextBox = Instance.new("TextBox")
 			local TextboxCorner = Instance.new("UICorner")
-
+		
 			Textbox.Name = "Textbox"
 			Textbox.Parent = Container
 			Textbox.BackgroundColor3 = Color3.fromRGB(32, 33, 37)
@@ -1313,7 +1204,7 @@ function VLib:Window(textgame)
 			Textbox.Text = ""
 			Textbox.TextColor3 = Color3.fromRGB(255, 255, 255)
 			Textbox.TextSize = 14.000
-
+		
 			Title.Name = "Title"
 			Title.Parent = Textbox
 			Title.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
@@ -1325,17 +1216,17 @@ function VLib:Window(textgame)
 			Title.TextColor3 = Color3.fromRGB(255, 255, 255)
 			Title.TextSize = 14.000
 			Title.TextXAlignment = Enum.TextXAlignment.Left
-
+		
 			TextboxFrame.Name = "TextboxFrame"
 			TextboxFrame.Parent = Textbox
 			TextboxFrame.BackgroundColor3 = Color3.fromRGB(22, 23, 27)
 			TextboxFrame.Position = UDim2.new(0.650124013, 0, 0.142857149, 0)
 			TextboxFrame.Size = UDim2.new(0, 134, 0, 19)
-
+		
 			TextboxFrameCorner.CornerRadius = UDim.new(0, 6)
 			TextboxFrameCorner.Name = "TextboxFrameCorner"
 			TextboxFrameCorner.Parent = TextboxFrame
-
+		
 			TextBox.Parent = TextboxFrame
 			TextBox.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 			TextBox.BackgroundTransparency = 1.000
@@ -1344,11 +1235,11 @@ function VLib:Window(textgame)
 			TextBox.Text = presetText or ""
 			TextBox.TextColor3 = Color3.fromRGB(255, 255, 255)
 			TextBox.TextSize = 14.000
-
+		
 			TextboxCorner.CornerRadius = UDim.new(0, 6)
 			TextboxCorner.Name = "TextboxCorner"
 			TextboxCorner.Parent = Textbox
-
+		
 			TextBox.FocusLost:Connect(function(ep)
 				if ep then
 					local inputText = TextBox.Text
@@ -1362,11 +1253,12 @@ function VLib:Window(textgame)
 					end
 				end
 			end)
-
+		
 			Container.CanvasSize = UDim2.new(0, 0, 0, ContainerLayout.AbsoluteContentSize.Y)
 		end		
-		return Tabs
+		return ContainerItems
 	end
+	return Tabs
 end
 
 return VLib
