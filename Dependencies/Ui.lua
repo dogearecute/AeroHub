@@ -492,6 +492,245 @@ function VLib:Window(textgame)
 		
 			Container.CanvasSize = UDim2.new(0, 0, 0, ContainerLayout.AbsoluteContentSize.Y)
 		end		
+		function ContainerItems:Toggle(text, callback)
+			local Toggled = false
+			local Toggle = Instance.new("TextButton")
+			local ToggleCorner = Instance.new("UICorner")
+			local Title = Instance.new("TextLabel")
+			local ToggleFrame = Instance.new("Frame")
+			local ToggleFrameCorner = Instance.new("UICorner")
+			local ToggleFrameRainbow = Instance.new("Frame")
+			local ToggleFrameRainbowCorner = Instance.new("UICorner")
+			local ToggleDot = Instance.new("Frame")
+			local ToggleDotCorner = Instance.new("UICorner")
+
+			Toggle.Name = "Toggle"
+			Toggle.Parent = Container
+			Toggle.BackgroundColor3 = Color3.fromRGB(32, 33, 37)
+			Toggle.Position = UDim2.new(-0.747557044, 0, 0.729113936, 0)
+			Toggle.Size = UDim2.new(0, 403, 0, 28)
+			Toggle.AutoButtonColor = false
+			Toggle.Font = Enum.Font.Gotham
+			Toggle.Text = ""
+			Toggle.TextColor3 = Color3.fromRGB(255, 255, 255)
+			Toggle.TextSize = 14.000
+
+			ToggleCorner.CornerRadius = UDim.new(0, 6)
+			ToggleCorner.Name = "ToggleCorner"
+			ToggleCorner.Parent = Toggle
+
+			Title.Name = "Title"
+			Title.Parent = Toggle
+			Title.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+			Title.BackgroundTransparency = 1.000
+			Title.Position = UDim2.new(0.0198511165, 0, 0, 0)
+			Title.Size = UDim2.new(0, 192, 0, 28)
+			Title.Font = Enum.Font.Gotham
+			Title.Text = text
+			Title.TextColor3 = Color3.fromRGB(255, 255, 255)
+			Title.TextSize = 14.000
+			Title.TextXAlignment = Enum.TextXAlignment.Left
+
+			ToggleFrame.Name = "ToggleFrame"
+			ToggleFrame.Parent = Toggle
+			ToggleFrame.BackgroundColor3 = Color3.fromRGB(22, 23, 27)
+			ToggleFrame.Position = UDim2.new(0.893300176, 0, 0.142857149, 0)
+			ToggleFrame.Size = UDim2.new(0, 36, 0, 19)
+
+			ToggleFrameCorner.CornerRadius = UDim.new(1, 0)
+			ToggleFrameCorner.Name = "ToggleFrameCorner"
+			ToggleFrameCorner.Parent = ToggleFrame
+
+			ToggleFrameRainbow.Name = "ToggleFrameRainbow"
+			ToggleFrameRainbow.Parent = ToggleFrame
+			ToggleFrameRainbow.BackgroundColor3 = Color3.fromHex("#766AFF")
+			ToggleFrameRainbow.BackgroundTransparency = 1.000
+			ToggleFrameRainbow.Position = UDim2.new(-0.0198377371, 0, 0.00601506233, 0)
+			ToggleFrameRainbow.Size = UDim2.new(0, 36, 0, 19)
+
+			ToggleFrameRainbowCorner.CornerRadius = UDim.new(1, 0)
+			ToggleFrameRainbowCorner.Name = "ToggleFrameRainbowCorner"
+			ToggleFrameRainbowCorner.Parent = ToggleFrameRainbow
+
+			ToggleDot.Name = "ToggleDot"
+			ToggleDot.Parent = ToggleFrameRainbow
+			ToggleDot.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+			ToggleDot.Position = UDim2.new(0.104999997, -3, 0.289000005, -4)
+			ToggleDot.Size = UDim2.new(0, 16, 0, 16)
+
+			ToggleDotCorner.CornerRadius = UDim.new(1, 0)
+			ToggleDotCorner.Name = "ToggleDotCorner"
+			ToggleDotCorner.Parent = ToggleDot
+
+			Toggle.MouseEnter:Connect(
+				function()
+					TweenService:Create(
+						Toggle,
+						TweenInfo.new(.2, Enum.EasingStyle.Quad),
+						{BackgroundColor3 = Color3.fromRGB(37, 39, 44)}
+					):Play()
+				end
+			)
+			Toggle.MouseLeave:Connect(
+				function()
+					TweenService:Create(
+						Toggle,
+						TweenInfo.new(.2, Enum.EasingStyle.Quad),
+						{BackgroundColor3 = Color3.fromRGB(32, 33, 37)}
+					):Play()
+				end
+			)
+
+			Toggle.MouseButton1Click:Connect(
+				function()
+					if Toggled == false then
+						TweenService:Create(
+							ToggleFrameRainbow,
+							TweenInfo.new(.2, Enum.EasingStyle.Quad),
+							{BackgroundTransparency = 0}
+						):Play()
+						TweenService:Create(
+							ToggleDot,
+							TweenInfo.new(.2, Enum.EasingStyle.Quad),
+							{Position = UDim2.new(0.595, -3, 0.289000005, -4)}
+						):Play()
+					else
+						TweenService:Create(
+							ToggleFrameRainbow,
+							TweenInfo.new(.2, Enum.EasingStyle.Quad),
+							{BackgroundTransparency = 1}
+						):Play()
+						TweenService:Create(
+							ToggleDot,
+							TweenInfo.new(.2, Enum.EasingStyle.Quad),
+							{Position = UDim2.new(0.104999997, -3, 0.289000005, -4)}
+						):Play()
+					end
+					Toggled = not Toggled
+					pcall(callback, Toggled)
+				end
+			)
+
+			Container.CanvasSize = UDim2.new(0, 0, 0, ContainerLayout.AbsoluteContentSize.Y)
+		end
+		function ContainerItems:Slider(text, min, max, start, callback) 
+			local dragging = false
+			local Slider = Instance.new("TextButton")
+			local Title = Instance.new("TextLabel")
+			local SliderFrame = Instance.new("Frame")
+			local SliderFrameCorner = Instance.new("UICorner")
+			local SliderIndicator = Instance.new("Frame")
+			local SliderIndicatorCorner = Instance.new("UICorner")
+			local SliderCorner = Instance.new("UICorner")
+			local Value = Instance.new("TextLabel")
+
+			Slider.Name = "Slider"
+			Slider.Parent = Container
+			Slider.BackgroundColor3 = Color3.fromRGB(32, 33, 37)
+			Slider.Position = UDim2.new(-0.747557044, 0, 0.729113936, 0)
+			Slider.Size = UDim2.new(0, 403, 0, 49)
+			Slider.AutoButtonColor = false
+			Slider.Font = Enum.Font.Gotham
+			Slider.Text = ""
+			Slider.TextColor3 = Color3.fromRGB(255, 255, 255)
+			Slider.TextSize = 14.000
+
+			Title.Name = "Title"
+			Title.Parent = Slider
+			Title.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+			Title.BackgroundTransparency = 1.000
+			Title.Position = UDim2.new(0.0198511165, 0, 0, 0)
+			Title.Size = UDim2.new(0, 192, 0, 28)
+			Title.Font = Enum.Font.Gotham
+			Title.Text = text
+			Title.TextColor3 = Color3.fromRGB(255, 255, 255)
+			Title.TextSize = 14.000
+			Title.TextXAlignment = Enum.TextXAlignment.Left
+
+			SliderFrame.Name = "SliderFrame"
+			SliderFrame.Parent = Slider
+			SliderFrame.BackgroundColor3 = Color3.fromRGB(22, 23, 27)
+			SliderFrame.Position = UDim2.new(0.0223324299, 0, 0.563266039, 0)
+			SliderFrame.Size = UDim2.new(0, 384, 0, 11)
+
+			SliderFrameCorner.Name = "SliderFrameCorner"
+			SliderFrameCorner.Parent = SliderFrame
+
+			SliderIndicator.Name = "SliderIndicator"
+			SliderIndicator.Parent = SliderFrame
+			SliderIndicator.BackgroundColor3 = Color3.fromHex("#766AFF")
+			SliderIndicator.BorderSizePixel = 0
+			SliderIndicator.Position = UDim2.new(-0.00260408712, 0, 0.0363603085, 0)
+			SliderIndicator.Size = UDim2.new((start or 0) / max, 0, 0, 11)
+
+			SliderIndicatorCorner.Name = "SliderIndicatorCorner"
+			SliderIndicatorCorner.Parent = SliderIndicator
+
+			SliderCorner.CornerRadius = UDim.new(0, 6)
+			SliderCorner.Name = "SliderCorner"
+			SliderCorner.Parent = Slider
+
+			Value.Name = "Value"
+			Value.Parent = Slider
+			Value.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+			Value.BackgroundTransparency = 1.000
+			Value.Position = UDim2.new(0.496277869, 0, 0, 0)
+			Value.Size = UDim2.new(0, 192, 0, 28)
+			Value.Font = Enum.Font.Gotham
+			Value.Text = tostring(start and math.floor((start / max) * (max - min) + min) or 0)
+			Value.TextColor3 = Color3.fromRGB(255, 255, 255)
+			Value.TextSize = 14.000
+			Value.TextXAlignment = Enum.TextXAlignment.Right
+
+			local function slide(input)
+				local pos =
+					UDim2.new(
+						math.clamp((input.Position.X - SliderFrame.AbsolutePosition.X) / SliderFrame.AbsoluteSize.X, 0, 1),
+						0,
+						0,
+						11
+					)
+				SliderIndicator:TweenSize(pos, Enum.EasingDirection.Out, Enum.EasingStyle.Quart, 0.3, true)
+				local val = math.floor(((pos.X.Scale * max) / max) * (max - min) + min)
+				Value.Text = tostring(val)
+				pcall(callback, val)
+			end
+
+			SliderFrame.InputBegan:Connect(
+				function(input)
+					if input.UserInputType == Enum.UserInputType.MouseButton1 then
+						slide(input)
+						dragging = true
+					end
+				end
+			)
+
+			SliderFrame.InputEnded:Connect(
+				function(input)
+					if input.UserInputType == Enum.UserInputType.MouseButton1 then
+						dragging = false
+					end
+				end
+			)
+
+			UserInputService.InputChanged:Connect(
+				function(input)
+					if dragging and input.UserInputType == Enum.UserInputType.MouseMovement then
+						slide(input)
+					end
+				end
+			)
+
+			Container.CanvasSize = UDim2.new(0, 0, 0, ContainerLayout.AbsoluteContentSize.Y)
+
+			coroutine.wrap(
+				function()
+					while wait() do
+						SliderIndicator.BackgroundColor3 = Color3.fromHSV(zigzag(counter), .8, 1)
+					end
+				end
+			)()
+		end
 		function ContainerItems:Dropdown(text, list, callback, presetValue)
 			local DropToggled = false
 			local FrameSize = 0
