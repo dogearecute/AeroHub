@@ -1,8 +1,8 @@
 -- Modified Ui (GayPrideFlag UI) --
 
 local VLib = {HueSelectionPosition = 0}
+local counter = 0
 
-counter = 0
 local UserInputService = game:GetService("UserInputService")
 local TweenService = game:GetService("TweenService")
 local RunService = game:GetService("RunService")
