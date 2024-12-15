@@ -1,4 +1,3 @@
-
 -- Modified Ui (GayPrideFlag UI) --
 
 local VLib = {HueSelectionPosition = 0}
