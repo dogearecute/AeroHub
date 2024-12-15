@@ -1303,6 +1303,8 @@ function VLib:Window(textgame)
 			LabelCorner.Parent = Label
 
 			Container.CanvasSize = UDim2.new(0, 0, 0, ContainerLayout.AbsoluteContentSize.Y)
+			
+			return Label
 		end
 		function ContainerItems:Textbox(text, disapper, callback, presetText)
 			local Textbox = Instance.new("TextButton")
